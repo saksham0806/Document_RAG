@@ -17,21 +17,25 @@ def retrieve_context(query, k=5):
     distances, indices = index.search(np.array(query_emb), k)
     return [texts[i] for i in indices[0]]
 
-def generate_answer(query, context=""):
-    prompt = f"""
-    You are a document analysis assistant.
-    Context:
-    {context}
+def generate_answer(query, k=5):
+    retrieved_chunks = retrieve_context(query, k=k)
 
-    Query: {query}
-    Answer:
-    """
+    if not retrieved_chunks:
+        return "No relevant context found. Please ensure the document is indexed."
+
+    context_text = "\n\n".join(retrieved_chunks)
+    prompt = f"""You are an AI assistant with access to document context.
+Use only the provided context to answer the question factually.
+
+Context:
+{context_text}
+
+Question: {query}
+Answer:"""
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ],
+        messages=[{"role": "user", "content": prompt}],
         temperature=0.2
     )
 

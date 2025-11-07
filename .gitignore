@@ -5,7 +5,12 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.faiss
+*.pkl
+*.pdf
+.faiss
+.pkl
+.pdf
 # Distribution / packaging
 .Python
 build/
