@@ -2,9 +2,11 @@ from flask import Flask, request, jsonify
 from ingest import ingest_document
 from retriever import build_faiss_index
 from query_engine import generate_answer
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
