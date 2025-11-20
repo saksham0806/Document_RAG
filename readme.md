@@ -1,24 +1,55 @@
-# IntelliDoc - Intelligent Document Query System
+# IntelliDoc – RAG-Powered Document Intelligence System
 
-A smart document processing system that lets you chat with your PDFs using AI. Built with Python, Flask, and OpenAI's GPT.
+IntelliDoc is an AI-driven document understanding and question-answering platform built using Retrieval-Augmented Generation (RAG). It allows users to upload PDFs, process them into vector embeddings, and ask natural-language questions to retrieve accurate, context-grounded answers.
+
+A custom frontend (stored in `frontend/`) provides an easy interface for document upload and querying, and a demo video is included to showcase the system end-to-end.
+
+---
+
+# Demo
+![Project Demo](readme_data/RAG_Chatbot_demo.gif)
+
+## Working API demo
+![API Demo](readme_images/working_api.png)
+---
 
 ## Features
 
-- PDF document processing and text extraction
-- Semantic search using FAISS indexing
-- AI-powered question answering using GPT
-- Simple web API interface
-- Fast and efficient document chunking
+- **RAG Pipeline (Retrieval-Augmented Generation)**
+  Combines semantic vector search with LLM-based response generation.
+
+- **Multi-Document Support**
+  All PDFs stored in `data/documents/` are processed and indexed together.
+
+- **High-Speed Semantic Search**
+  Uses FAISS for efficient retrieval over large document collections.
+
+- **LLM-Powered Question Answering**
+  OpenAI GPT models generate accurate, context-aware answers.
+
+- **Frontend UI**
+  Clean UI for uploading documents and interacting with the system.
+
+- **REST API**
+  `/upload` and `/query` endpoints provided via Flask.
+
+---
 
 ## Tech Stack
 
-- **Backend**: Python, Flask
-- **AI/ML**: OpenAI GPT, Sentence Transformers
-- **Vector Database**: FAISS
-- **Document Processing**: PyPDF2, LangChain
-- **Containerization**: Docker
+- Python  
+- LangChain  
+- HuggingFace Transformers  
+- FAISS  
+- Flask  
+- OpenAI GPT-4o-mini
 
-## Getting Started
+Frontend:
+- React
+- Axios for API communication
+
+---
+
 
 ### Prerequisites
 
@@ -49,8 +80,20 @@ pip install -r requirements.txt
 ```
 OPENAI_API_KEY=your_api_key_here
 ```
+5. run flask app
+```
+python app.py
+```
+7. install node packages for frontend
+```
+cd frontend && npm install
+```
+7. run frontend
+```
+cd frontend && npm run dev
+```
 
-## Usage
+## Usage without frontend
 
 1. Place your PDF documents in the `data/documents` folder
 
@@ -70,16 +113,6 @@ curl -X POST -H "Content-Type: application/json" \
      -d '{"query":"your question here"}' \
      http://localhost:5000/query
 ```
-
-## Docker Support
-
-Build and run using Docker:
-
-```bash
-docker build -t intellidoc .
-docker run -p 5000:5000 intellidoc
-```
-
 
 ## Contributing
 
