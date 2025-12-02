@@ -12,7 +12,7 @@ def load_existing_chunks(path="data/processed/chunks.pkl"):
     return []
 
 
-def ingest_document(pdf_path, chunk_size=800, chunk_overlap=100):
+def ingest_document(pdf_path, chunk_size=300, chunk_overlap=30):
     """
     Extracts text from a PDF, chunks it, and APPENDS them to the global chunks list.
     """
@@ -45,7 +45,7 @@ def ingest_document(pdf_path, chunk_size=800, chunk_overlap=100):
     chunks_file = "data/processed/chunks.pkl"
 
     existing_chunks = load_existing_chunks(chunks_file)
-    print(f"📦 Found {len(existing_chunks)} existing chunks, appending...")
+    print(f"Found {len(existing_chunks)} existing chunks, appending...")
 
     final_chunks = existing_chunks + new_chunks
 
@@ -53,7 +53,7 @@ def ingest_document(pdf_path, chunk_size=800, chunk_overlap=100):
     with open(chunks_file, "wb") as f:
         pickle.dump(final_chunks, f)
 
-    print(f"💾 Saved {len(final_chunks)} total chunks to {chunks_file}")
+    print(f"Saved {len(final_chunks)} total chunks to {chunks_file}")
 
     return new_chunks
 

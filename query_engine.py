@@ -24,19 +24,18 @@ def generate_answer(query, k=5):
         return "No relevant context found. Please ensure the document is indexed."
 
     context_text = "\n\n".join(retrieved_chunks)
-    prompt = f"""You are an AI assistant with access to document context.
-Use only the provided context to answer the question factually.
-
-Context:
-{context_text}
-
+    prompt = f"""
+Context: {context_text}
 Question: {query}
 Answer:"""
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2
+        messages=[
+            {"role": "system","content": """ You are an AI assistant with access to document context. 
+             Use only the provided context to answer the question factually. Answer based on given context only"""},
+            {"role": "user", "content": prompt}],
+        temperature=0.4
     )
 
     return response.choices[0].message.content.strip()
